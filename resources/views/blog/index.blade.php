@@ -16,7 +16,7 @@
             <article class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:border-violet-500/50 transition-colors">
                 <div class="md:flex">
                     @if($post->featured_image)
-                        <a href="{{ route('posts.show', $post) }}" class="block md:w-72 shrink-0">
+                        <a href="{{ route('blog.post', $post) }}" class="block md:w-72 shrink-0">
                             <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-48 md:h-full object-cover">
                         </a>
                     @endif
@@ -26,13 +26,13 @@
                             @if($post->categories->count())
                                 <div class="flex flex-wrap gap-2 mb-3">
                                     @foreach($post->categories->take(2) as $category)
-                                        <a href="{{ route('category.show', $category) }}" class="text-xs font-medium text-violet-600 dark:text-violet-400 hover:underline">{{ $category->name }}</a>
+                                        <a href="{{ route('blog.category', $category) }}" class="text-xs font-medium text-violet-600 dark:text-violet-400 hover:underline">{{ $category->name }}</a>
                                     @endforeach
                                 </div>
                             @endif
 
                             <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                                <a href="{{ route('posts.show', $post) }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{{ $post->title }}</a>
+                                <a href="{{ route('blog.post', $post) }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{{ $post->title }}</a>
                             </h2>
                             <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mb-4">{{ $post->excerpt }}</p>
                         </div>
@@ -48,7 +48,7 @@
                                 <span>·</span>
                                 <time datetime="{{ $post->published_at?->toISOString() }}">{{ $post->published_at?->format('M d, Y') }}</time>
                             </div>
-                            <a href="{{ route('posts.show', $post) }}" class="font-medium text-violet-600 dark:text-violet-400 hover:underline">{{ __('common.read_more') }} &rarr;</a>
+                            <a href="{{ route('blog.post', $post) }}" class="font-medium text-violet-600 dark:text-violet-400 hover:underline">{{ __('common.read_more') }} &rarr;</a>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">{{ __('common.popular_posts') }}</h3>
         <div class="space-y-4">
             @foreach($popularPosts as $popular)
-                <a href="{{ route('posts.show', $popular) }}" class="flex gap-3 group">
+                <a href="{{ route('blog.post', $popular) }}" class="flex gap-3 group">
                     @if($popular->featured_image)
                         <img src="{{ Storage::url($popular->featured_image) }}" alt="" class="w-16 h-16 rounded-lg object-cover shrink-0">
                     @else
@@ -33,7 +33,7 @@
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">{{ __('common.categories') }}</h3>
         <div class="flex flex-wrap gap-2">
             @foreach($categories as $category)
-                <a href="{{ route('category.show', $category) }}" class="px-3 py-1.5 text-sm rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-violet-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                <a href="{{ route('blog.category', $category) }}" class="px-3 py-1.5 text-sm rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-violet-500 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                     {{ $category->name }} <span class="text-xs text-gray-400">({{ $category->posts_count }})</span>
                 </a>
             @endforeach
@@ -49,7 +49,7 @@
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">{{ __('common.tags') }}</h3>
         <div class="flex flex-wrap gap-2">
             @foreach($tags->take(15) as $tag)
-                <a href="{{ route('tag.show', $tag) }}" class="px-2 py-1 text-xs rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                <a href="{{ route('blog.tag', $tag) }}" class="px-2 py-1 text-xs rounded bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
                     #{{ $tag->name }}
                 </a>
             @endforeach

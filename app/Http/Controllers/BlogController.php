@@ -7,10 +7,43 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class BlogController extends Controller
 {
+    /**
+     * Get sidebar data with caching.
+     */
+    protected function getSidebarData(): array
+    {
+        $ttl = config('cache.ttl', 3600);
+
+        $popularPosts = Cache::remember('sidebar.popular_posts', $ttl, function () {
+            return Post::published()->popular()->take(5)->get();
+        });
+
+        $categories = Cache::remember('sidebar.categories', $ttl, function () {
+            return Category::withCount('posts')
+                ->having('posts_count', '>', 0)
+                ->orderBy('name')
+                ->get();
+        });
+
+        $tags = Cache::remember('sidebar.tags', $ttl, function () {
+            return Tag::withCount('posts')
+                ->having('posts_count', '>', 0)
+                ->orderBy('name')
+                ->get();
+        });
+
+        $pages = Cache::remember('navigation.pages', $ttl, function () {
+            return Page::active()->ordered()->get();
+        });
+
+        return compact('popularPosts', 'categories', 'tags', 'pages');
+    }
+
     /**
      * Display the blog homepage.
      */
@@ -21,24 +54,7 @@ class BlogController extends Controller
             ->with(['user', 'categories'])
             ->paginate(10);
 
-        $popularPosts = Post::published()
-            ->popular()
-            ->take(5)
-            ->get();
-
-        $categories = Category::withCount('posts')
-            ->having('posts_count', '>', 0)
-            ->orderBy('name')
-            ->get();
-
-        $tags = Tag::withCount('posts')
-            ->having('posts_count', '>', 0)
-            ->orderBy('name')
-            ->get();
-
-        $pages = Page::active()->ordered()->get();
-
-        return view('blog.index', compact('posts', 'popularPosts', 'categories', 'tags', 'pages'));
+        return view('blog.index', array_merge(['posts' => $posts], $this->getSidebarData()));
     }
 
     /**
@@ -54,22 +70,20 @@ class BlogController extends Controller
         $post->incrementViews();
         $post->load(['user', 'categories', 'tags', 'metas']);
 
-        $relatedPosts = Post::published()
-            ->where('id', '!=', $post->id)
-            ->whereHas('categories', function ($q) use ($post) {
-                $q->whereIn('categories.id', $post->categories->pluck('id'));
-            })
-            ->take(4)
-            ->get();
+        $relatedPosts = Cache::remember("post.{$post->id}.related", config('cache.ttl', 3600), function () use ($post) {
+            return Post::published()
+                ->where('id', '!=', $post->id)
+                ->whereHas('categories', function ($q) use ($post) {
+                    $q->whereIn('categories.id', $post->categories->pluck('id'));
+                })
+                ->take(4)
+                ->get();
+        });
 
-        $popularPosts = Post::published()
-            ->popular()
-            ->take(5)
-            ->get();
-
-        $pages = Page::active()->ordered()->get();
-
-        return view('blog.post', compact('post', 'relatedPosts', 'popularPosts', 'pages'));
+        return view('blog.post', array_merge(
+            ['post' => $post, 'relatedPosts' => $relatedPosts],
+            $this->getSidebarData()
+        ));
     }
 
     /**
@@ -85,12 +99,10 @@ class BlogController extends Controller
             ->with(['user', 'categories'])
             ->paginate(10);
 
-        $popularPosts = Post::published()->popular()->take(5)->get();
-        $categories = Category::withCount('posts')->having('posts_count', '>', 0)->orderBy('name')->get();
-        $tags = Tag::withCount('posts')->having('posts_count', '>', 0)->orderBy('name')->get();
-        $pages = Page::active()->ordered()->get();
-
-        return view('blog.category', compact('posts', 'category', 'popularPosts', 'categories', 'tags', 'pages'));
+        return view('blog.category', array_merge(
+            ['posts' => $posts, 'category' => $category],
+            $this->getSidebarData()
+        ));
     }
 
     /**
@@ -106,12 +118,10 @@ class BlogController extends Controller
             ->with(['user', 'categories'])
             ->paginate(10);
 
-        $popularPosts = Post::published()->popular()->take(5)->get();
-        $categories = Category::withCount('posts')->having('posts_count', '>', 0)->orderBy('name')->get();
-        $tags = Tag::withCount('posts')->having('posts_count', '>', 0)->orderBy('name')->get();
-        $pages = Page::active()->ordered()->get();
-
-        return view('blog.tag', compact('posts', 'tag', 'popularPosts', 'categories', 'tags', 'pages'));
+        return view('blog.tag', array_merge(
+            ['posts' => $posts, 'tag' => $tag],
+            $this->getSidebarData()
+        ));
     }
 
     /**
@@ -132,11 +142,9 @@ class BlogController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        $popularPosts = Post::published()->popular()->take(5)->get();
-        $categories = Category::withCount('posts')->having('posts_count', '>', 0)->orderBy('name')->get();
-        $tags = Tag::withCount('posts')->having('posts_count', '>', 0)->orderBy('name')->get();
-        $pages = Page::active()->ordered()->get();
-
-        return view('blog.search', compact('posts', 'query', 'popularPosts', 'categories', 'tags', 'pages'));
+        return view('blog.search', array_merge(
+            ['posts' => $posts, 'query' => $query],
+            $this->getSidebarData()
+        ));
     }
 }

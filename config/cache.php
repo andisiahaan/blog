@@ -103,6 +103,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cache TTL (Time To Live)
+    |--------------------------------------------------------------------------
+    |
+    | Default cache duration in seconds. Used throughout the application
+    | for consistent cache expiration. Default is 1 hour (3600 seconds).
+    |
+    */
+
+    'ttl' => env('CACHE_TTL', 3600),
+
+    /*
+    |--------------------------------------------------------------------------
     | Cache Key Prefix
     |--------------------------------------------------------------------------
     |
@@ -115,3 +127,4 @@ return [
     'prefix' => env('CACHE_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')).'-cache-'),
 
 ];
+

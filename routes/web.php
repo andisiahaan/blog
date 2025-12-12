@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 // Blog Frontend Routes
 Route::get('/', [BlogController::class, 'index'])->name('home');
-Route::get('/posts/{post:slug}', [BlogController::class, 'show'])->name('posts.show');
-Route::get('/category/{category:slug}', [BlogController::class, 'category'])->name('category.show');
-Route::get('/tag/{tag:slug}', [BlogController::class, 'tag'])->name('tag.show');
+Route::get('/posts/{post:slug}', [BlogController::class, 'show'])->name('blog.post');
+Route::get('/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('/tag/{tag:slug}', [BlogController::class, 'tag'])->name('blog.tag');
 Route::get('/search', [BlogController::class, 'search'])->name('search');
 
 // Pages
 Route::get('/pages/{page:slug}', [PageController::class, 'show'])->name('pages.show');
+
+// Sitemap Routes
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
+Route::get('/sitemap-tags.xml', [SitemapController::class, 'tags'])->name('sitemap.tags');
+Route::get('/sitemap-categories.xml', [SitemapController::class, 'categories'])->name('sitemap.categories');
+Route::get('/sitemap-posts-{page}.xml', [SitemapController::class, 'posts'])->where('page', '[0-9]+')->name('sitemap.posts');
 
 // Guest Routes (Auth)
 Route::middleware('guest')->group(function () {
@@ -50,3 +57,4 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')
         ->name('verification.send');
 });
+

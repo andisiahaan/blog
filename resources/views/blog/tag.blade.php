@@ -25,13 +25,13 @@
             <article class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-violet-500/50 transition-colors">
                 <div class="flex gap-4">
                     @if($post->featured_image)
-                        <a href="{{ route('posts.show', $post) }}" class="shrink-0">
+                        <a href="{{ route('blog.post', $post) }}" class="shrink-0">
                             <img src="{{ Storage::url($post->featured_image) }}" alt="" class="w-24 h-24 rounded-lg object-cover">
                         </a>
                     @endif
                     <div class="min-w-0 flex-1">
                         <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                            <a href="{{ route('posts.show', $post) }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{{ $post->title }}</a>
+                            <a href="{{ route('blog.post', $post) }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{{ $post->title }}</a>
                         </h2>
                         <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2">{{ $post->excerpt }}</p>
                         <div class="flex items-center text-xs text-gray-500 space-x-3">

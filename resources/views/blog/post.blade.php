@@ -14,7 +14,7 @@
         @if($post->categories->count())
             <div class="flex flex-wrap gap-2 mb-4">
                 @foreach($post->categories as $category)
-                    <a href="{{ route('category.show', $category) }}" class="px-3 py-1 text-sm font-medium rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors">{{ $category->name }}</a>
+                    <a href="{{ route('blog.category', $category) }}" class="px-3 py-1 text-sm font-medium rounded-full bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors">{{ $category->name }}</a>
                 @endforeach
             </div>
         @endif
@@ -51,7 +51,7 @@
     @if($post->tags->count())
         <div class="flex flex-wrap gap-2 py-6 border-t border-gray-200 dark:border-gray-800">
             @foreach($post->tags as $tag)
-                <a href="{{ route('tag.show', $tag) }}" class="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">#{{ $tag->name }}</a>
+                <a href="{{ route('blog.tag', $tag) }}" class="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">#{{ $tag->name }}</a>
             @endforeach
         </div>
     @endif
@@ -77,7 +77,7 @@
     <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">{{ __('common.related_posts') }}</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         @foreach($relatedPosts as $related)
-            <a href="{{ route('posts.show', $related) }}" class="flex gap-4 p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-violet-500/50 transition-colors group">
+            <a href="{{ route('blog.post', $related) }}" class="flex gap-4 p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-violet-500/50 transition-colors group">
                 @if($related->featured_image)
                     <img src="{{ Storage::url($related->featured_image) }}" alt="" class="w-20 h-20 rounded-lg object-cover shrink-0">
                 @endif
