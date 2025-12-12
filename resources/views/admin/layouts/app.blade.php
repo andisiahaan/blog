@@ -12,6 +12,9 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
     <script src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
+    @if(setting('site_favicon'))
+    <link rel="icon" href="{{ Storage::url(setting('site_favicon')) }}" type="image/x-icon">
+    @endif
 </head>
 <body class="font-sans antialiased bg-gray-50 dark:bg-black text-gray-900 dark:text-white">
     <div class="min-h-screen flex">

@@ -1,8 +1,6 @@
-@extends('layouts.main')
+<x-layouts.main 
+    :title="__('common.search_results') . ': ' . $query . ' - ' . setting('site_name', config('app.name'))">
 
-@section('title', __('common.search_results') . ': ' . $query . ' - ' . config('app.name'))
-
-@section('content')
 <div class="space-y-8">
     <!-- Header -->
     <div class="mb-8">
@@ -35,7 +33,7 @@
                 <article class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 hover:border-violet-500/50 transition-colors">
                     <div class="flex gap-4">
                         @if($post->featured_image)
-                            <a href="{{ route('blog.post', $post) }}" class="shrink-0">
+                            <a href="{{ route('post.show', $post) }}" class="shrink-0">
                                 <img src="{{ Storage::url($post->featured_image) }}" alt="" class="w-24 h-24 rounded-lg object-cover">
                             </a>
                         @endif
@@ -43,12 +41,12 @@
                             @if($post->categories->count())
                                 <div class="flex flex-wrap gap-1 mb-1">
                                     @foreach($post->categories->take(2) as $category)
-                                        <a href="{{ route('blog.category', $category) }}" class="text-xs text-violet-600 dark:text-violet-400 hover:underline">{{ $category->name }}</a>
+                                        <a href="{{ route('category.show', $category) }}" class="text-xs text-violet-600 dark:text-violet-400 hover:underline">{{ $category->name }}</a>
                                     @endforeach
                                 </div>
                             @endif
                             <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                                <a href="{{ route('blog.post', $post) }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{{ $post->title }}</a>
+                                <a href="{{ route('post.show', $post) }}" class="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{{ $post->title }}</a>
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2">{{ $post->excerpt }}</p>
                             <div class="flex items-center text-xs text-gray-500 space-x-3">
@@ -69,4 +67,5 @@
         @if($posts->hasPages())<div class="pt-4">{{ $posts->links() }}</div>@endif
     @endif
 </div>
-@endsection
+
+</x-layouts.main>

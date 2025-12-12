@@ -23,7 +23,8 @@ class SettingController extends Controller
      */
     public function updateGeneral(Request $request)
     {
-        $fields = [
+        // Text fields
+        $textFields = [
             'site_name' => 'text',
             'site_description' => 'textarea',
             'site_keywords' => 'text',
@@ -32,10 +33,38 @@ class SettingController extends Controller
             'google_analytics' => 'textarea',
         ];
 
-        foreach ($fields as $key => $type) {
+        foreach ($textFields as $key => $type) {
             if ($request->has($key)) {
                 Setting::set($key, $request->input($key), 'general', $type);
             }
+        }
+
+        // Integer fields (display settings)
+        $integerFields = [
+            'posts_per_page',
+            'related_posts_limit',
+            'sidebar_popular_limit',
+            'sidebar_random_limit',
+            'sidebar_categories_limit',
+            'sidebar_tags_limit',
+        ];
+
+        foreach ($integerFields as $key) {
+            if ($request->has($key)) {
+                Setting::set($key, (int) $request->input($key), 'general', 'integer');
+            }
+        }
+
+        // Boolean fields (sidebar toggles)
+        $booleanFields = [
+            'sidebar_popular_enabled',
+            'sidebar_random_enabled',
+            'sidebar_categories_enabled',
+            'sidebar_tags_enabled',
+        ];
+
+        foreach ($booleanFields as $key) {
+            Setting::set($key, $request->boolean($key) ? '1' : '0', 'general', 'boolean');
         }
 
         // Handle logo upload
@@ -53,6 +82,7 @@ class SettingController extends Controller
         return redirect()->route('admin.settings.general')
             ->with('success', __('admin.settings_updated'));
     }
+
 
     /**
      * Show custom tags settings.

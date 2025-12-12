@@ -4,20 +4,23 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-2">
+                @if(setting('site_logo'))
+                <img src="{{ Storage::url(setting('site_logo')) }}" alt="{{ setting('site_name', config('app.name')) }}" class="w-8 h-8">
+                @else
                 <div class="w-8 h-8 bg-gradient-to-br from-violet-600 to-purple-600 rounded-lg flex items-center justify-center">
                     <span class="text-white font-bold text-sm">B</span>
                 </div>
-                <span class="font-bold text-lg text-gray-900 dark:text-white">{{ config('app.name') }}</span>
+                @endif
+                <span class="font-bold text-lg text-gray-900 dark:text-white">{{ setting('site_name', config('app.name')) }}</span>
             </a>
 
             <!-- Desktop Navigation -->
             <div class="hidden md:flex items-center space-x-6">
                 <a href="{{ route('home') }}" class="text-sm font-medium {{ request()->routeIs('home') ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }} transition-colors">{{ __('common.home') }}</a>
-                @isset($pages)
-                    @foreach($pages->take(5) as $page)
-                        <a href="{{ route('pages.show', $page) }}" class="text-sm font-medium {{ request()->is('pages/'.$page->slug) ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }} transition-colors">{{ $page->title }}</a>
-                    @endforeach
-                @endisset
+                <a href="{{ route('category.show', 'bisnis' ) }}" class="text-sm font-medium {{ request()->routeIs('category.show', 'bisnis') ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }} transition-colors">Bisnis</a>
+                <a href="{{ route('category.show', 'teknologi') }}" class="text-sm font-medium {{ request()->routeIs('category.show', 'teknologi') ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }} transition-colors">Teknologi</a>
+                <a href="{{ route('category.show', 'gaya-hidup') }}" class="text-sm font-medium {{ request()->routeIs('category.show', 'gaya-hidup') ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }} transition-colors">Gaya Hidup</a>
+                <a href="{{ route('category.show', 'finansial') }}" class="text-sm font-medium {{ request()->routeIs('category.show', 'finansial') ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }} transition-colors">Finansial</a>
             </div>
 
             <!-- Right Actions -->

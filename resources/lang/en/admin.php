@@ -119,6 +119,20 @@ return [
     'footer_text' => 'Footer Text',
     'google_analytics' => 'Google Analytics Code',
 
+    // Display Settings
+    'display_settings' => 'Display Settings',
+    'posts_per_page' => 'Posts Per Page',
+    'related_posts_limit' => 'Related Posts Limit',
+    'sidebar_settings' => 'Sidebar Settings',
+    'sidebar_popular_enabled' => 'Show Popular Posts',
+    'sidebar_popular_limit' => 'Popular Posts Limit',
+    'sidebar_random_enabled' => 'Show Random Posts',
+    'sidebar_random_limit' => 'Random Posts Limit',
+    'sidebar_categories_enabled' => 'Show Categories',
+    'sidebar_categories_limit' => 'Categories Limit',
+    'sidebar_tags_enabled' => 'Show Tags',
+    'sidebar_tags_limit' => 'Tags Limit',
+
     // Custom Tags
     'custom_tags' => 'Custom Tags',
     'head_body_tags' => 'Head & Body Tags',
@@ -141,7 +155,20 @@ return [
     'tag_other' => 'Other Tags',
     'tag_footer' => 'Footer Section',
     'tag_popup' => 'Popup',
+
+    // Profile
+    'profile' => 'Profile',
+    'profile_information' => 'Profile Information',
+    'profile_information_desc' => 'Update your account\'s profile information and email address.',
+    'profile_updated' => 'Profile updated successfully.',
+    'update_password' => 'Update Password',
+    'update_password_desc' => 'Ensure your account is using a long, random password to stay secure.',
+    'current_password' => 'Current Password',
+    'new_password' => 'New Password',
+    'password_updated' => 'Password updated successfully.',
 ];
+
+
 
 
 

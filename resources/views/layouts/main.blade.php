@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>@yield('title', config('app.name'))</title>
-    <meta name="description" content="@yield('description', 'A modern blog')">
+    <title>{{ $title ?? 'Untitled' }} - {{ setting('site_name', config('app.name')) }}</title>
+    <meta name="description" content="{{ $description ?? setting('site_description', 'A modern blog') }}">
+    @if($keywords)<meta name="keywords" content="{{ $keywords }}">@endif
     
     <!-- Open Graph -->
-    <meta property="og:title" content="@yield('og_title', config('app.name'))">
-    <meta property="og:description" content="@yield('og_description', 'A modern blog')">
-    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="{{ $ogTitle ?? 'Untitled' }}">
+    <meta property="og:description" content="{{ $ogDescription ?? setting('site_description', 'A modern blog') }}">
+    <meta property="og:type" content="{{ $ogType ?? 'website' }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    @hasSection('og_image')<meta property="og:image" content="@yield('og_image')">@endif
+    @if($ogImage)<meta property="og:image" content="{{ $ogImage }}">@endif
     
-    <link rel="canonical" href="@yield('canonical', url()->current())">
+    <link rel="canonical" href="{{ $canonical ?? url()->current() }}">
+    
+    <!-- Additional Meta Slot -->
+    {{ $meta ?? '' }}
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +27,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
-    @yield('head')
+    @if(setting('site_favicon'))
+    <link rel="icon" href="{{ Storage::url(setting('site_favicon')) }}" type="image/x-icon">
+    @endif
+    
+    <!-- Head Slot -->
+    {{ $head ?? '' }}
 </head>
 <body class="font-sans antialiased bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen">
     <!-- Navigation -->
@@ -48,7 +57,7 @@
         <div class="flex flex-col lg:flex-row gap-8">
             <!-- Content Area -->
             <div class="flex-1 min-w-0">
-                @yield('content')
+                {{ $slot }}
             </div>
             
             <!-- Sidebar -->
@@ -59,6 +68,7 @@
     <!-- Footer -->
     @include('layouts.partials.footer')
 
-    @stack('scripts')
+    <!-- Scripts Slot -->
+    {{ $scripts ?? '' }}
 </body>
 </html>

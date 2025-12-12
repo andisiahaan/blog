@@ -1,8 +1,4 @@
-@extends('auth.layout')
-
-@section('title', __('auth.verify_email'))
-
-@section('content')
+<x-layouts.plain :title="__('auth.verify_email')">
 <div class="text-center">
     <div class="mb-6">
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-100 dark:bg-violet-900/30 mb-4">
@@ -42,4 +38,4 @@
         </form>
     </div>
 </div>
-@endsection
+</x-layouts.plain>

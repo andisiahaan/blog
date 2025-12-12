@@ -1,8 +1,4 @@
-@extends('auth.layout')
-
-@section('title', __('auth.login'))
-
-@section('content')
+<x-layouts.plain :title="__('auth.login')">
 <div>
     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ __('auth.welcome_back') }}</h2>
     <p class="text-gray-600 dark:text-gray-400 mb-8">{{ __('auth.enter_details') }}</p>
@@ -91,4 +87,4 @@
         </a>
     </p>
 </div>
-@endsection
+</x-layouts.plain>

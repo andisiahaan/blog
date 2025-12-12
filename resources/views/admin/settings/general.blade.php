@@ -72,6 +72,78 @@
         </div>
     </div>
 
+    {{-- Display Settings --}}
+    <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-800">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ __('admin.display_settings') }}</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {{-- Posts Per Page --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('admin.posts_per_page') }}</label>
+                <input type="number" name="posts_per_page" value="{{ $settings['posts_per_page'] ?? 10 }}" min="1" max="50"
+                       class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-violet-500">
+            </div>
+
+            {{-- Related Posts Limit --}}
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ __('admin.related_posts_limit') }}</label>
+                <input type="number" name="related_posts_limit" value="{{ $settings['related_posts_limit'] ?? 12 }}" min="0" max="20"
+                       class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-violet-500">
+            </div>
+        </div>
+
+        {{-- Sidebar Settings --}}
+        <h4 class="text-md font-medium text-gray-700 dark:text-gray-300 mt-6 mb-3">{{ __('admin.sidebar_settings') }}</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {{-- Popular Posts --}}
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="sidebar_popular_enabled" value="0">
+                    <input type="checkbox" name="sidebar_popular_enabled" value="1" {{ ($settings['sidebar_popular_enabled'] ?? true) ? 'checked' : '' }}
+                           class="w-4 h-4 text-violet-600 rounded focus:ring-violet-500">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.sidebar_popular_enabled') }}</label>
+                </div>
+                <input type="number" name="sidebar_popular_limit" value="{{ $settings['sidebar_popular_limit'] ?? 5 }}" min="1" max="20"
+                       class="w-16 px-2 py-1 text-sm rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
+            </div>
+
+            {{-- Random Posts --}}
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="sidebar_random_enabled" value="0">
+                    <input type="checkbox" name="sidebar_random_enabled" value="1" {{ ($settings['sidebar_random_enabled'] ?? true) ? 'checked' : '' }}
+                           class="w-4 h-4 text-violet-600 rounded focus:ring-violet-500">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.sidebar_random_enabled') }}</label>
+                </div>
+                <input type="number" name="sidebar_random_limit" value="{{ $settings['sidebar_random_limit'] ?? 5 }}" min="1" max="20"
+                       class="w-16 px-2 py-1 text-sm rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
+            </div>
+
+            {{-- Categories --}}
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="sidebar_categories_enabled" value="0">
+                    <input type="checkbox" name="sidebar_categories_enabled" value="1" {{ ($settings['sidebar_categories_enabled'] ?? true) ? 'checked' : '' }}
+                           class="w-4 h-4 text-violet-600 rounded focus:ring-violet-500">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.sidebar_categories_enabled') }}</label>
+                </div>
+                <input type="number" name="sidebar_categories_limit" value="{{ $settings['sidebar_categories_limit'] ?? 20 }}" min="1" max="50"
+                       class="w-16 px-2 py-1 text-sm rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
+            </div>
+
+            {{-- Tags --}}
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <input type="hidden" name="sidebar_tags_enabled" value="0">
+                    <input type="checkbox" name="sidebar_tags_enabled" value="1" {{ ($settings['sidebar_tags_enabled'] ?? true) ? 'checked' : '' }}
+                           class="w-4 h-4 text-violet-600 rounded focus:ring-violet-500">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('admin.sidebar_tags_enabled') }}</label>
+                </div>
+                <input type="number" name="sidebar_tags_limit" value="{{ $settings['sidebar_tags_limit'] ?? 20 }}" min="1" max="50"
+                       class="w-16 px-2 py-1 text-sm rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
+            </div>
+        </div>
+    </div>
+
     {{-- Footer & Analytics --}}
     <div class="bg-white dark:bg-gray-900 rounded-xl p-5 border border-gray-200 dark:border-gray-800">
         <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ __('admin.footer_analytics') }}</h3>
@@ -100,3 +172,4 @@
     </div>
 </form>
 @endsection
+

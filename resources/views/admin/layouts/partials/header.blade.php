@@ -42,6 +42,9 @@
                     <p class="text-sm font-medium text-gray-900 dark:text-white">{{ auth()->user()->name }}</p>
                     <p class="text-xs text-gray-500">{{ auth()->user()->email }}</p>
                 </div>
+                <a href="{{ route('admin.profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    {{ __('admin.profile') }}
+                </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
@@ -49,6 +52,7 @@
                     </button>
                 </form>
             </div>
+
         </div>
     </div>
 </header>

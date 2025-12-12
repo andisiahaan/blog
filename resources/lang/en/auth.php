@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'welcome_message' => 'Welcome to :name',
+    'secure_connection' => 'Secure connection',
     'failed' => 'These credentials do not match our records.',
     'password' => 'Password',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',

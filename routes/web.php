@@ -5,9 +5,12 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +20,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Blog Frontend Routes
-Route::get('/', [BlogController::class, 'index'])->name('home');
-Route::get('/posts/{post:slug}', [BlogController::class, 'show'])->name('blog.post');
-Route::get('/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
-Route::get('/tag/{tag:slug}', [BlogController::class, 'tag'])->name('blog.tag');
-Route::get('/search', [BlogController::class, 'search'])->name('search');
+Route::get('/', [PostController::class, 'index'])->name('home');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
+
+Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+Route::get('/tag/{tag:slug}', [TagController::class, 'show'])->name('tag.show');
+
+Route::get('/search', SearchController::class)->name('search');
 
 // Pages
 Route::get('/pages/{page:slug}', [PageController::class, 'show'])->name('pages.show');
@@ -58,3 +65,6 @@ Route::middleware('auth')->group(function () {
         ->name('verification.send');
 });
 
+Route::get('/{post:slug}', [PostController::class, 'show'])
+    ->where('post', '^(?!admin$|login$|register$|api$|pages$|posts$).+')
+    ->name('post.show');
