@@ -1,9 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "andisiahaan/blog",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Blog application built with Laravel.",
+    "keywords": ["laravel", "blog"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
