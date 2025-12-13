@@ -28,7 +28,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     @if(setting('site_favicon'))
-    <link rel="icon" href="{{ Storage::url(setting('site_favicon')) }}" type="image/x-icon">
+    <link rel="icon" href="{{ Storage::disk('public')->url(setting('site_favicon')) }}" type="image/x-icon">
     @endif
     
     <!-- Head Slot -->

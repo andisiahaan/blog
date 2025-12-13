@@ -57,12 +57,21 @@
         <div x-show="mobileMenuOpen" x-transition class="md:hidden py-4 border-t border-gray-200 dark:border-gray-800">
             <div class="space-y-2">
                 <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->routeIs('home') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400' }}">{{ __('common.home') }}</a>
-                @isset($pages)
-                    @foreach($pages as $page)
-                        <a href="{{ route('pages.show', $page) }}" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('pages/'.$page->slug) ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400' }}">{{ $page->title }}</a>
-                    @endforeach
-                @endisset
-                @guest<a href="{{ route('login') }}" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('auth.login') }}</a>@endguest
+                <a href="{{ route('category.show', 'bisnis') }}" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('category/bisnis') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400' }}">Bisnis</a>
+                <a href="{{ route('category.show', 'teknologi') }}" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('category/teknologi') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400' }}">Teknologi</a>
+                <a href="{{ route('category.show', 'gaya-hidup') }}" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('category/gaya-hidup') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400' }}">Gaya Hidup</a>
+                <a href="{{ route('category.show', 'finansial') }}" class="block px-3 py-2 rounded-lg text-sm font-medium {{ request()->is('category/finansial') ? 'bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400' : 'text-gray-600 dark:text-gray-400' }}">Finansial</a>
+                @auth
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-lg text-sm font-medium text-violet-600 dark:text-violet-400">Admin</a>
+                    @endif
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('auth.logout') }}</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="block px-3 py-2 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('auth.login') }}</a>
+                @endauth
             </div>
         </div>
     </div>
