@@ -5,7 +5,7 @@
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center space-x-2">
                 @if(setting('site_logo'))
-                <img src="{{ Storage::url(setting('site_logo')) }}" alt="{{ setting('site_name', config('app.name')) }}" class="w-8 h-8">
+                <img src="{{ Storage::disk('public')->url(setting('site_logo')) }}" alt="{{ setting('site_name', config('app.name')) }}" class="w-8 h-8">
                 @else
                 <div class="w-8 h-8 bg-gradient-to-br from-violet-600 to-purple-600 rounded-lg flex items-center justify-center">
                     <span class="text-white font-bold text-sm">B</span>

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AiLogController;
+use App\Http\Controllers\Admin\AiSettingController;
+use App\Http\Controllers\Admin\AiTopicController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PageController;
@@ -39,3 +42,24 @@ Route::get('settings/general', [SettingController::class, 'general'])->name('set
 Route::put('settings/general', [SettingController::class, 'updateGeneral'])->name('settings.general.update');
 Route::get('settings/custom-tags', [SettingController::class, 'customTags'])->name('settings.custom-tags');
 Route::put('settings/custom-tags', [SettingController::class, 'updateCustomTags'])->name('settings.custom-tags.update');
+
+// AI Auto Blog
+Route::prefix('ai')->name('ai.')->group(function () {
+    // AI Settings (read-only from .env)
+    Route::get('settings', [AiSettingController::class, 'index'])->name('settings');
+    Route::post('settings/test', [AiSettingController::class, 'testConnection'])->name('settings.test');
+    Route::post('settings/thumbnails', [AiSettingController::class, 'uploadThumbnails'])->name('settings.thumbnails.upload');
+    Route::delete('settings/thumbnails', [AiSettingController::class, 'deleteThumbnail'])->name('settings.thumbnails.delete');
+
+    // AI Topics
+    Route::resource('topics', AiTopicController::class);
+    Route::post('topics/{topic}/generate', [AiTopicController::class, 'generate'])->name('topics.generate');
+
+    // AI Logs
+    Route::get('logs', [AiLogController::class, 'index'])->name('logs.index');
+    Route::get('logs/stats', [AiLogController::class, 'stats'])->name('logs.stats');
+    Route::get('logs/{log}', [AiLogController::class, 'show'])->name('logs.show');
+    Route::post('logs/{log}/retry', [AiLogController::class, 'retry'])->name('logs.retry');
+    Route::delete('logs/cleanup', [AiLogController::class, 'cleanup'])->name('logs.cleanup');
+});
+
