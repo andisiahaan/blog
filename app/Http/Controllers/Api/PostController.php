@@ -127,7 +127,7 @@ class PostController extends Controller
             }
 
             $filename = $folder . '/' . Str::uuid() . '.' . $extension;
-            Storage::disk(config('fileystem.default', 'public'))->put($filename, $imageData);
+            Storage::disk(config('filesystems.default', 'public'))->put($filename, $imageData);
 
             return $filename;
         } catch (\Exception $e) {
