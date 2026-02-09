@@ -8,6 +8,8 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
+Schedule::command('posts:publish-scheduled')->everyMinute();
+
 // AI Auto Blog Scheduler - reads config from .env via config/ai.php
 Schedule::command('ai:schedule')->when(function () {
     return config('ai.enabled', false) && config('ai.scheduling.enabled', false);
